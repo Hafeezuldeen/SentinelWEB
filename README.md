@@ -1,5 +1,7 @@
 # SentinelWEB
 
+### HAFEEZUL DEEN S
+
 ## Title
 SentinelWEB: A Comprehensive Cybersecurity Toolkit
 
@@ -11,7 +13,7 @@ SentinelWEB is a cybersecurity toolkit that includes three main features:
 1. **Password Creator AI**: Generates strong passwords based on user-defined criteria, helping users create secure passwords that are harder to guess.
 2. **Password Strength Analyzer**: Evaluates the strength of user-entered passwords and provides feedback on how to improve them.
 3. **Phishing Email Detector**: Analyzes email content for common phishing keywords, alerting users to potential scams.
-
+4. **Personal Text Encryption Tool**: A Personal Text Encryption Tool that securely converts your messages into encrypted code and decrypts them back using a unique secret key for personal desired own purposes with only needed persons we communicate the confiedntial informations.
 
 Now its an Prototype. so, it only have 3 types of Tools only .
 
@@ -465,6 +467,10 @@ Our commitment to evolving the platform into a leading threat intelligence and A
 
 ![image](https://github.com/user-attachments/assets/ab50ebe0-200f-449f-b060-af38a5c9a54f)
 *Phishing Email Detection Result*
+
+<img width="1897" height="827" alt="Screenshot 2025-10-22 114931" src="https://github.com/user-attachments/assets/f3a2920e-f9e3-4397-8487-d0997b8f6d67" />
+<img width="1919" height="458" alt="Screenshot 2025-10-22 115018" src="https://github.com/user-attachments/assets/c7cde2cf-5149-44c9-acd5-e752a744d21a" />
+*Personal Text Encryption Tool*
 
 ## Installation
 To run the project locally, follow these steps:
