@@ -1,9 +1,8 @@
 # SentinelWEB
 
-### HAFEEZUL DEEN S
-
 ## Title
 SentinelWEB: A Comprehensive Cybersecurity Toolkit
+### By: HAFEEZUL DEEN S
 
 ## Problem Statement
 In today's digital age, users face numerous cybersecurity threats, including weak passwords and phishing attacks. Many individuals and small businesses lack the necessary tools to protect their sensitive information and assess their cybersecurity posture. This project aims to provide a user-friendly platform for generating strong passwords, analyzing password strength, and detecting potential phishing attempts in email content and personal text encryption tool.
@@ -568,20 +567,25 @@ Our commitment to evolving the platform into a leading threat intelligence and A
 
 ## Output Screenshots
 ![image](https://github.com/user-attachments/assets/43339a6d-b5c0-4e26-8a09-92950662904b)
-*Home*
+### *Home*
+
 
 ![image](https://github.com/user-attachments/assets/49dff06e-ab8a-4fb8-9ad7-5b7ee2ae8209)
-*Password Creator Interface*
+### *Password Creator Interface*
+
 
 ![image](https://github.com/user-attachments/assets/f9766210-f166-443a-96a5-0b6a2992898e)
-*Password Strength Analysis Result*
+### *Password Strength Analysis Result*
+
 
 ![image](https://github.com/user-attachments/assets/ab50ebe0-200f-449f-b060-af38a5c9a54f)
-*Phishing Email Detection Result*
+<img width="1919" height="788" alt="Screenshot 2025-10-22 120044" src="https://github.com/user-attachments/assets/85d7d429-29be-4cba-875c-3e482cd1c99f" />
+### *Phishing Email Detection Result*
+
 
 <img width="1897" height="827" alt="Screenshot 2025-10-22 114931" src="https://github.com/user-attachments/assets/f3a2920e-f9e3-4397-8487-d0997b8f6d67" />
 <img width="1919" height="458" alt="Screenshot 2025-10-22 115018" src="https://github.com/user-attachments/assets/c7cde2cf-5149-44c9-acd5-e752a744d21a" />
-*Personal Text Encryption Tool*
+### *Personal Text Encryption Tool*
 
 ## Installation
 To run the project locally, follow these steps:
@@ -595,3 +599,5 @@ To run the project locally, follow these steps:
 ## Acknowledgments
 - Thanks to Flask for providing an easy-to-use web framework.
 - Special thanks to the contributors and supporters of this project.
+
+### Copyrights Owned By Hafeezul Deen S
