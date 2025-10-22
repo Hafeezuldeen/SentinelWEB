@@ -6,16 +6,16 @@
 SentinelWEB: A Comprehensive Cybersecurity Toolkit
 
 ## Problem Statement
-In today's digital age, users face numerous cybersecurity threats, including weak passwords and phishing attacks. Many individuals and small businesses lack the necessary tools to protect their sensitive information and assess their cybersecurity posture. This project aims to provide a user-friendly platform for generating strong passwords, analyzing password strength, and detecting potential phishing attempts in email content.
+In today's digital age, users face numerous cybersecurity threats, including weak passwords and phishing attacks. Many individuals and small businesses lack the necessary tools to protect their sensitive information and assess their cybersecurity posture. This project aims to provide a user-friendly platform for generating strong passwords, analyzing password strength, and detecting potential phishing attempts in email content and personal text encryption tool.
 
 ## About This Project
-SentinelWEB is a cybersecurity toolkit that includes three main features:
+SentinelWEB is a cybersecurity toolkit that includes 4 main features:
 1. **Password Creator AI**: Generates strong passwords based on user-defined criteria, helping users create secure passwords that are harder to guess.
 2. **Password Strength Analyzer**: Evaluates the strength of user-entered passwords and provides feedback on how to improve them.
 3. **Phishing Email Detector**: Analyzes email content for common phishing keywords, alerting users to potential scams.
 4. **Personal Text Encryption Tool**: A Personal Text Encryption Tool that securely converts your messages into encrypted code and decrypts them back using a unique secret key for personal desired own purposes with only needed persons we communicate the confiedntial informations.
 
-Now its an Prototype. so, it only have 3 types of Tools only .
+Now its an Prototype. so, it only have 4 types of Tools only .
 
 The project is built using Flask, a lightweight web framework, making it accessible and easy to deploy.
 
@@ -319,11 +319,12 @@ The project is built using Flask, a lightweight web framework, making it accessi
 
 *app.py*
 ```
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 import random
-import os
 import string
 import re
+import datetime
+from encryption_tool.encryption_tool import encrypt_message, decrypt_message, generate_key
 
 app = Flask(__name__)
 
@@ -384,6 +385,68 @@ def check_password_strength(password):
     else:
         return 'Weak'
 
+# Encryption Tool routes
+@app.route('/generate-key')
+def generate_key_route():
+    key = generate_key()
+    return f"Key generated and saved as secret.key: {key}"
+
+@app.route('/encrypt', methods=['POST'])
+def encrypt_route():
+    message = request.form.get('message')
+    if not message:
+        return "Please provide a message to encrypt.", 400  # Handle missing message error
+    encrypted = encrypt_message(message)
+    # Highlight the `b' '` to wrap around the encrypted message
+    return f"Encrypted Message: <div style='color:green;'>b'{encrypted.decode()}'</div>"
+
+@app.route('/decrypt', methods=['POST'])
+def decrypt_route():
+    encrypted_message = request.form.get('encrypted_message')
+    
+    # Strip unnecessary characters if present
+    if encrypted_message.startswith("b'") and encrypted_message.endswith("'"):
+        encrypted_message = encrypted_message[2:-1]
+    
+    try:
+        decrypted = decrypt_message(encrypted_message.encode())
+        return f"Decrypted Message: <div style='color:blue;'>{decrypted}</div>"
+    except Exception as e:
+        return f"An error occurred during decryption: {str(e)}", 400
+
+@app.route('/encryption_tool', methods=['GET', 'POST'])
+def encryption_tool():
+    encrypted_message = None
+    decrypted_message = None
+    error_message = None
+    
+    if request.method == 'POST':
+        if 'encrypt' in request.form:
+            message = request.form.get('message')
+            if message:
+                encrypted_message = encrypt_message(message)
+                # Show encrypted message wrapped in `b' '`
+                encrypted_message = f"b'{encrypted_message.decode()}'"
+            else:
+                error_message = "Please provide a message to encrypt."
+        elif 'decrypt' in request.form:
+            encrypted_message = request.form.get('encrypted_message')
+            if encrypted_message:
+                try:
+                    # Strip and decode before decrypting
+                    if encrypted_message.startswith("b'") and encrypted_message.endswith("'"):
+                        encrypted_message = encrypted_message[2:-1]
+                    decrypted_message = decrypt_message(encrypted_message.encode())
+                except Exception as e:
+                    error_message = f"Decryption failed: {str(e)}"
+            else:
+                error_message = "Please provide an encrypted message to decrypt."
+    
+    return render_template('encryption_tool.html', 
+                           encrypted_message=encrypted_message, 
+                           decrypted_message=decrypted_message,
+                           error_message=error_message)
+
 def detect_phishing(email_content):
     # Simple keyword detection logic (you can expand this)
     phishing_keywords = ['urgent', 'password', 'confirm', 'account']
@@ -400,7 +463,55 @@ def phishing_detector():
         result = detect_phishing(email_content)
     return render_template('phishing_detector.html', result=result)
 
-# Run the app
+
+
+# Global list to store malicious attempts
+honeypot_logs = []
+
+# Secret password for accessing honeypot logs
+ADMIN_PASSWORD = 'HAFEEX'  # Change this to your desired password
+
+# Route for Honeypot
+@app.route('/honeypot', methods=['GET', 'POST'])
+def honeypot():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        ip_address = request.remote_addr
+        timestamp = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
+        # Log malicious attempt
+        honeypot_logs.append({
+            "username": username,
+            "password": password,
+            "ip_address": ip_address,
+            "timestamp": timestamp
+        })
+
+        # Redirect to a fake "error" page or refresh honeypot
+        return render_template('honeypot.html', message="Invalid credentials! Please try again.")
+
+    return render_template('honeypot.html', message=None)
+
+# Route to view logs with authentication
+@app.route('/honeypot_logs', methods=['GET', 'POST'])
+def view_honeypot_logs():
+    if request.method == 'POST':
+        entered_password = request.form.get('password')
+        if entered_password == ADMIN_PASSWORD:
+            return render_template('honeypot_logs.html', logs=honeypot_logs)
+        else:
+            return "Unauthorized access. Wrong password.", 403
+
+    # Show the login form for admin access
+    return render_template('honeypot_login.html')
+
+
+
+
+
+
+
 if __name__ == '__main__':
     app.run(debug=True, port=5001)
 
